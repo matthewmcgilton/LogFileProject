@@ -1,4 +1,3 @@
-from pydoc import doc
 import shutil
 from zipfile import ZipFile
 import os
@@ -31,6 +30,7 @@ def recursive_unzip_worker(directory):
     #Returns false to end recursion, once no more zips are found
     return False
 
+#Function to initialize the unzipping
 def recursive_unzip(directory):
     #Setting up directory
     if(os.path.exists(directory)):
@@ -59,11 +59,12 @@ def recursive_unzip(directory):
         print("Cancelling operation.")
         return False #To know if operation failed
 
-def grab_files(directory, result_directory):
+#Function to grab all files after the unzip has taken place
+def grab_files(source_directory, result_directory):
     if not os.path.exists(result_directory):
         os.mkdir(result_directory)
     
-    for root, dir, files in os.walk(directory):
+    for root, dir, files in os.walk(source_directory):
         for file in files:
             if re.search(r'\.txt$', file):
                 file_path = os.path.join(root, file)
