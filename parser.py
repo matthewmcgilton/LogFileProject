@@ -30,31 +30,6 @@ def recursive_unzip_worker(directory):
                 #Returns true to make sure recursion continues
                 return True
 
-            #If the file ends in .zip
-            elif re.search(r'\.tgz$', file):
-                #Path to extract to (root)
-                to_path = os.path.join(root, file.split('.tgz')[0])
-                #Zip to extract
-                tar_file = os.path.join(root, file)
-
-                #If the path doesn't exist, create the path
-                if not os.path.exists(to_path):
-                    os.makedirs(to_path)
-                    #Extraction
-                    tfile = tarfile.open(tar_file)
-                    tfile_files = tfile.getnames()
-
-                    for item in tfile_files:
-                        if ("app-aid-wwu") in item:
-                            tfile.extract(item, path=to_path)
-
-                    tfile.close()
-                    #Deletes zip file (necessary to stop recursion)
-                    os.remove(tar_file)
-                
-                #Returns true to make sure recursion continues
-                return True
-
     #Returns false to end recursion, once no more zips are found
     return False
 
@@ -87,20 +62,42 @@ def recursive_unzip(directory):
         print("Cancelling operation.")
         return False #To know if operation failed
 
-#Function to grab all files after the unzip has taken place
-def grab_files(source_directory, result_directory):
+#Function to grab all tar files after the unzip has taken place
+def grab_tar_files(source_directory, result_directory):
     if not os.path.exists(result_directory):
         os.mkdir(result_directory)
     
     for root, dir, files in os.walk(source_directory):
         for file in files:
-            if re.search(r'\.log$', file):
-                file_path = os.path.join(root, file)
-                shutil.move(file_path, result_directory)
+            try:
+                if re.search(r'\.tgz$', file):
+                    file_path = os.path.join(root, file)
+                    shutil.move(file_path, result_directory)
+            except:
+                print("Error with shutil.move")
+
+def grab_log_files(directory):
+    for file in os.listdir(directory):
+        tar_path = os.path.join(directory, file)
+
+        tar_file = tarfile.open(tar_path)
+        tar_file_files = tar_file.getnames()
+
+        for item in tar_file_files:
+            if ("app-aid-wwu") in item:
+                tar_file.extract(item, path=directory)
+
+        tar_file.close()
+        #Deletes zip file (necessary to stop recursion)
+        os.remove(tar_path)
 
 #Executions
 source_dir ='ZippedLogs'
 result_dir = 'Logs'
 if recursive_unzip(source_dir):
-    grab_files(source_dir, result_dir)
-    #exec(open("updated_folder_parser.py").read())
+    print("Grabbing tar files..")
+    grab_tar_files(source_dir, result_dir)
+    print("Grabbing log files..")
+    grab_log_files(result_dir)
+    print("Creating excel sheet..")
+    exec(open("updated_folder_parser.py").read())
