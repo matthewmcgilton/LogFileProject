@@ -1,5 +1,7 @@
 import shutil
+import tarfile
 from zipfile import ZipFile
+from tarfile import TarFile
 import os
 import re
 
@@ -27,6 +29,32 @@ def recursive_unzip_worker(directory):
                 
                 #Returns true to make sure recursion continues
                 return True
+
+            #If the file ends in .zip
+            elif re.search(r'\.tgz$', file):
+                #Path to extract to (root)
+                to_path = os.path.join(root, file.split('.tgz')[0])
+                #Zip to extract
+                tar_file = os.path.join(root, file)
+
+                #If the path doesn't exist, create the path
+                if not os.path.exists(to_path):
+                    os.makedirs(to_path)
+                    #Extraction
+                    tfile = tarfile.open(tar_file)
+                    tfile_files = tfile.getnames()
+
+                    for item in tfile_files:
+                        if ("app-aid-wwu") in item:
+                            tfile.extract(item, path=to_path)
+
+                    tfile.close()
+                    #Deletes zip file (necessary to stop recursion)
+                    os.remove(tar_file)
+                
+                #Returns true to make sure recursion continues
+                return True
+
     #Returns false to end recursion, once no more zips are found
     return False
 
@@ -66,7 +94,7 @@ def grab_files(source_directory, result_directory):
     
     for root, dir, files in os.walk(source_directory):
         for file in files:
-            if re.search(r'\.txt$', file):
+            if re.search(r'\.log$', file):
                 file_path = os.path.join(root, file)
                 shutil.move(file_path, result_directory)
 
@@ -75,3 +103,4 @@ source_dir ='ZippedLogs'
 result_dir = 'Logs'
 if recursive_unzip(source_dir):
     grab_files(source_dir, result_dir)
+    #exec(open("updated_folder_parser.py").read())
