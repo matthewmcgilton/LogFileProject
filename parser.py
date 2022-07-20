@@ -116,15 +116,13 @@ def driver(source, result):
     print("Grabbing log files..")
     grab_log_files(result)
     print("Creating excel sheet..")
-    exec(open("updated_folder_parser.py").read())
 
     #Deletes the zipped logs directory as it's not needed anymore.
-    os.rmdir(source)
-
-
+    shutil.rmtree(source)
 
 #Execution of script
 source_dir ='ZippedLogs'
 result_dir = 'Logs'
 
 driver(source_dir, result_dir)
+exec(open("updated_folder_parser.py").read())
