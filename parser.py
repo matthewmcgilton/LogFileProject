@@ -42,62 +42,89 @@ def recursive_unzip(directory):
         print("ZippedLogs folder didn't exist, creating now...")
         os.mkdir("ZippedLogs")
     
-    #Checks if files are ready
-    #
-    #
-    #might need to rework
-    input1 = input("Are the zip files placed in the Logs folder? (There may be multiple) Y/N: ")
-    input2 = input("The zip files will be deleted after completion, is there a backup? Y/N: ")
-    input3 = input("Final check. Y/N: ")
+    #3 checks done so user knows how the script runs
+    input1 = input("Are the zip files placed in the ZippedLogs folder? (There may be multiple) Y/N: ")
+    if (input1 != 'Y'):
+        print("Cancelling operation")
+        return False
 
-    if(input1 == 'Y' and input2 == 'Y' and input3 == 'Y'):
+    input2 = input("The zip files will be deleted after completion, is there a backup? Y/N: ")
+    if(input2 != 'Y'):
+        print("Cancelling operation")
+        return False
+    
+    input3 = input("Final check. Y/N: ")
+    if(input3 != 'Y'):
+        print("Cancelling operation")
+        return False
+    
+    else:
         #Runs unzip_directory until exists_zip is false
+        print("Unzipping files..")
         run = True
         while run:
             run = recursive_unzip_worker(directory) #run will equal false once no more zips are found.
-        print("Completed")
         return True #To know if operation was completed
-    else:
-        print("All conditions must be Y")
-        print("Cancelling operation.")
-        return False #To know if operation failed
 
-#Function to grab all tar files after the unzip has taken place
+#Function to grab all tar files after the inital unzip has taken place
 def grab_tar_files(source_directory, result_directory):
+    #Create directory if it doesn't exist
     if not os.path.exists(result_directory):
         os.mkdir(result_directory)
     
+    #Loop to search through the directory for any tar files
     for root, dir, files in os.walk(source_directory):
         for file in files:
+            #Try/except in case there are any issues with moving
+            #(Ran into an issue with one of the zip files, still trying to find out why)
             try:
+                #If it ends in .tgz, move it to the result directory
                 if re.search(r'\.tgz$', file):
                     file_path = os.path.join(root, file)
                     shutil.move(file_path, result_directory)
             except:
                 print("Error with shutil.move")
 
+#Function to grab log files from each tar file that was found
 def grab_log_files(directory):
+    #Loop for each tar file in the log folder
     for file in os.listdir(directory):
-        tar_path = os.path.join(directory, file)
+        tar_path = os.path.join(directory, file) #path of tar file
+        tar_file = tarfile.open(tar_path) #tar file object
+        tar_file_files = tar_file.getnames() #items in tar file
 
-        tar_file = tarfile.open(tar_path)
-        tar_file_files = tar_file.getnames()
-
+        #Checks for any aid log files in the tar file
         for item in tar_file_files:
             if ("app-aid-wwu") in item:
+                #Extracts them when found
                 tar_file.extract(item, path=directory)
 
+        #Closes and deletes tar file (necessary to stop recursion)
         tar_file.close()
-        #Deletes zip file (necessary to stop recursion)
         os.remove(tar_path)
 
-#Executions
-source_dir ='ZippedLogs'
-result_dir = 'Logs'
-if recursive_unzip(source_dir):
+#Driver function which executes all relevant functions
+def driver(source, result):
+    #If the recursive unzip fails, cancel the operation
+    if not recursive_unzip(source_dir):
+        print("Error with unzipping, cancelling operation")
+        return False
+    
+    #Only runs if recursive unzip is successful
     print("Grabbing tar files..")
-    grab_tar_files(source_dir, result_dir)
+    grab_tar_files(source, result)
     print("Grabbing log files..")
-    grab_log_files(result_dir)
+    grab_log_files(result)
     print("Creating excel sheet..")
     exec(open("updated_folder_parser.py").read())
+
+    #Deletes the zipped logs directory as it's not needed anymore.
+    os.rmdir(source)
+
+
+
+#Execution of script
+source_dir ='ZippedLogs'
+result_dir = 'Logs'
+
+driver(source_dir, result_dir)
