@@ -18,7 +18,9 @@ worksheet1 = workbook.add_worksheet('Data')
 worksheet1.write(1, 1 , 'Signal Strength (dBm)')
 worksheet1.write(1, 2 , 'Up Time (sec)')
 worksheet1.write(1, 3 , 'Cell Band (MHz)')
-worksheet1.write(1, 4 , 'Airport ID')
+worksheet1.write(1, 5 , 'Airport ID')
+worksheet1.write(1, 6 , 'Tail ID')
+worksheet1.write(1, 7 , 'LRU Type')
 
 #Set strings of what is being looked for
 sigStr = "signalStrength"
@@ -41,7 +43,6 @@ def parse_files(file_path):
 
         for line in lines:
             if sigStr in line:
-
                 # This messy section of code finds the value of the SIGNAL STRENGTH and only inputs the value into the array rather than random characters as well because the length of value changes (def could be easier by idk)
                 index = (line.find(sigStr))
                 if line[index + 19].isalpha():
@@ -99,14 +100,18 @@ def parse_files(file_path):
 
 
 
-print(signalStrengths)
-print(len(signalStrengths))
+#print(signalStrengths)
+#print(len(signalStrengths))
 
+#This function formats and creates all of the graphs for the excel spreadsheet
 def excel_formatting():
+
     # Adding data arrays to spreadsheet
     j = 0
     values = len(signalStrengths)
     airVAL = len(airportID)
+    ID_len = len(tail_ID)
+    LRU_len = len(LRU_type)
     while j < values:
         worksheet1.write(j + 2, 1, int(signalStrengths[j]))
         worksheet1.write(j + 2, 2, int(upTime[j]))
@@ -114,7 +119,15 @@ def excel_formatting():
         j += 1
     j = 0
     while j < airVAL:
-        worksheet1.write(j + 2, 4, airportID[j])
+        worksheet1.write(j + 2, 5, airportID[j])
+        j += 1
+    j = 0
+    while j < ID_len:
+        worksheet1.write(j + 2,6, tail_ID[j])
+        j += 1
+    j=0
+    while j < LRU_len:
+        worksheet1.write(j + 2, 7, LRU_type[j])
         j += 1
 
     worksheet1.set_column(1, 1, 20)
@@ -240,9 +253,9 @@ def excel_formatting():
 
     }
     #Adding charts to file
-    worksheet1.insert_chart('G14',chart)
-    worksheet1.insert_chart('Q14',chart2)
-    worksheet1.insert_textbox('F2',textbox_text, options)
+    worksheet1.insert_chart('I14',chart)
+    worksheet1.insert_chart('S14',chart2)
+    worksheet1.insert_textbox('I2',textbox_text, options)
     workbook.close()
 
 

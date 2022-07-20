@@ -1,0 +1,112 @@
+2021-04-14T23:09:26 2021-04-14T23:09:26 172.23.0.1 [AID-NOTICE] AID-WWU: WWU name: AID-WWU IP address: 172.27.61.11 LRU identifier: AID1
+2021-04-14T23:09:26 2021-04-14T23:09:26 172.23.0.1 [AID-NOTICE] AID-WWU: WWU state transitioning from Unconfigured to Initializing
+2021-04-14T23:09:26 2021-04-14T23:09:26 172.23.0.1 [AID-NOTICE] AID-WWU: From the NFS OPC <cell> element: enabled=true, linkName=CELLULAR, linkType=GSM, linkVerificationMethod=dns, linkVerificationDnsHost=www.boeing.com, linkVerificationPingHost=null, linkVerificationTimeOut=120
+2021-04-14T23:09:26 2021-04-14T23:09:26 172.23.0.1 [AID-NOTICE] AID-WWU: From the NFS OPC <wifi> element: enabled=true, linkName=TWLU, linkType=GATELINK822, linkVerificationMethod=dns, linkVerificationDnsHost=www.boeing.com, linkVerificationPingHost=null, linkVerificationTimeOut=120
+2021-04-14T23:09:26 2021-04-14T23:09:26 172.23.0.1 [AID-NOTICE] AID-WWU: From the NFS OPC <wired> element: enabled=false, linkName=WIRED, linkType=ETHERNET, linkVerificationMethod=dns, linkVerificationDnsHost=www.boeing.com, linkVerificationPingHost=null, linkVerificationTimeOut=120
+2021-04-14T23:09:26 2021-04-14T23:09:26 172.23.0.1 [AID-NOTICE] AID-WWU: From the NFS OPC <linkConnection>: timeToLinkActive=0, timeToLinkInactive=0, debounceCounter=0
+2021-04-14T23:09:26 2021-04-14T23:09:26 172.23.0.1 [AID-NOTICE] AID-WWU: Gatelink CA/CRL certs are missing, WWU WiFi and Wired service will be disabled.
+2021-04-14T23:09:28 2021-04-14T23:09:28 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:10:26 2021-04-14T23:10:26 172.23.0.1 [AID-NOTICE] AID-WWU: WOW is not available. Setting to false.
+2021-04-14T23:10:26 2021-04-14T23:10:26 172.23.0.1 [AID-NOTICE] AID-WWU: After registering links, LinkPreference=[WiFi, Cellular]
+2021-04-14T23:10:26 2021-04-14T23:10:26 172.23.0.1 [AID-NOTICE] AID-WWU: Wired- Service is not enabled in configuration
+2021-04-14T23:10:26 2021-04-14T23:10:26 172.23.0.1 [AID-NOTICE] AID-WWU: WiFi- Service is not enabled in configuration
+2021-04-14T23:10:26 2021-04-14T23:10:26 172.23.0.1 [AID-NOTICE] AID-WWU: WiFi- no wifi faults will be reported because wifi link is not enabled in configuration
+2021-04-14T23:10:26 2021-04-14T23:10:26 172.23.0.1 [AID-NOTICE] AID-WWU: AID-WWU fault event from AID1 with faultNumber 302 will not trigger AID_DECLARES_WWU_FAIL fault
+2021-04-14T23:10:26 2021-04-14T23:10:26 172.23.0.1 [AID-NOTICE] AID-WWU: AID-WWU fault event from AID1 with faultNumber 303 will not trigger AID_DECLARES_WWU_FAIL fault
+2021-04-14T23:10:26 2021-04-14T23:10:26 172.23.0.1 [AID-NOTICE] AID-WWU: AID-WWU fault event from AID1 with faultNumber 305 will not trigger AID_DECLARES_WWU_FAIL fault
+2021-04-14T23:10:26 2021-04-14T23:10:26 172.23.0.1 [AID-NOTICE] AID-WWU: AID-WWU fault event from AID1 with faultNumber 306 will not trigger AID_DECLARES_WWU_FAIL fault
+2021-04-14T23:10:26 2021-04-14T23:10:26 172.23.0.1 [AID-NOTICE] AID-WWU: Cellular- SIM slot 2 faults will not be reported because no cellular profile in the UMS utilizes SIM 2
+2021-04-14T23:10:26 2021-04-14T23:10:26 172.23.0.1 [AID-NOTICE] AID-WWU: AID-WWU will not be reporting ONS fault: AID1_SIM_CARD_2_MISSING_OR_INOPERATIVE
+2021-04-14T23:10:28 2021-04-14T23:10:28 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:10:36 2021-04-14T23:10:36 172.23.0.1 [AID-WARNING] AID-WWU: Invalid LRU credential from the WWU LRU.
+2021-04-14T23:10:36 2021-04-14T23:10:36 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 2 consecutive comm failures to the WWU
+2021-04-14T23:10:41 2021-04-14T23:10:41 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:10:46 2021-04-14T23:10:46 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 3 consecutive comm failures to the WWU
+2021-04-14T23:10:56 2021-04-14T23:10:56 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 4 consecutive comm failures to the WWU
+2021-04-14T23:10:56 2021-04-14T23:10:56 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:10:56 2021-04-14T23:10:56 172.23.0.1 [AID-WARNING] AID-WWU: Unable to communicate to the WWU LRU.
+2021-04-14T23:10:56 2021-04-14T23:10:56 172.23.0.1 [AID-NOTICE] AID-WWU: WWU state transitioning from Initializing to Unconfigured
+2021-04-14T23:11:06 2021-04-14T23:11:06 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 5 consecutive comm failures to the WWU
+2021-04-14T23:11:11 2021-04-14T23:11:11 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:11:13 2021-04-14T23:11:13 172.23.0.1 [AID-NOTICE] AID-WWU: WOW Change occured, current wow=false, new wow=true
+2021-04-14T23:11:16 2021-04-14T23:11:16 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 6 consecutive comm failures to the WWU
+2021-04-14T23:11:26 2021-04-14T23:11:26 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 7 consecutive comm failures to the WWU
+2021-04-14T23:11:26 2021-04-14T23:11:26 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:11:28 2021-04-14T23:11:28 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:11:36 2021-04-14T23:11:36 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 8 consecutive comm failures to the WWU
+2021-04-14T23:11:41 2021-04-14T23:11:41 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:11:46 2021-04-14T23:11:46 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 9 consecutive comm failures to the WWU
+2021-04-14T23:11:56 2021-04-14T23:11:56 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 10 consecutive comm failures to the WWU
+2021-04-14T23:11:57 2021-04-14T23:11:57 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:12:06 2021-04-14T23:12:06 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 11 consecutive comm failures to the WWU
+2021-04-14T23:12:12 2021-04-14T23:12:12 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:12:16 2021-04-14T23:12:16 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 12 consecutive comm failures to the WWU
+2021-04-14T23:12:26 2021-04-14T23:12:26 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 13 consecutive comm failures to the WWU
+2021-04-14T23:12:27 2021-04-14T23:12:27 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:12:28 2021-04-14T23:12:28 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:12:36 2021-04-14T23:12:36 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 14 consecutive comm failures to the WWU
+2021-04-14T23:12:42 2021-04-14T23:12:42 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:12:46 2021-04-14T23:12:46 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 15 consecutive comm failures to the WWU
+2021-04-14T23:12:56 2021-04-14T23:12:56 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 16 consecutive comm failures to the WWU
+2021-04-14T23:12:57 2021-04-14T23:12:57 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:13:06 2021-04-14T23:13:06 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 17 consecutive comm failures to the WWU
+2021-04-14T23:13:12 2021-04-14T23:13:12 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:13:16 2021-04-14T23:13:16 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 18 consecutive comm failures to the WWU
+2021-04-14T23:13:26 2021-04-14T23:13:26 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 19 consecutive comm failures to the WWU
+2021-04-14T23:13:27 2021-04-14T23:13:27 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:13:28 2021-04-14T23:13:28 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:14:36 2021-04-14T23:14:36 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 20 consecutive comm failures to the WWU
+2021-04-14T23:14:42 2021-04-14T23:14:42 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: org.apache.commons.httpclient.ConnectTimeoutException: The host did not accept the connection within timeout of 60000 ms
+2021-04-14T23:15:28 2021-04-14T23:15:28 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: org.apache.commons.httpclient.ConnectTimeoutException: The host did not accept the connection within timeout of 60000 ms
+2021-04-14T23:15:47 2021-04-14T23:15:47 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 21 consecutive comm failures to the WWU
+2021-04-14T23:15:59 2021-04-14T23:15:59 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: org.apache.commons.httpclient.ConnectTimeoutException: The host did not accept the connection within timeout of 60000 ms
+2021-04-14T23:16:57 2021-04-14T23:16:57 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 22 consecutive comm failures to the WWU
+2021-04-14T23:17:16 2021-04-14T23:17:16 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: org.apache.commons.httpclient.ConnectTimeoutException: The host did not accept the connection within timeout of 60000 ms
+2021-04-14T23:17:28 2021-04-14T23:17:28 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: org.apache.commons.httpclient.ConnectTimeoutException: The host did not accept the connection within timeout of 60000 ms
+2021-04-14T23:17:34 2021-04-14T23:17:34 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: java.net.NoRouteToHostException: No route to host (Host unreachable)
+2021-04-14T23:17:41 2021-04-14T23:17:41 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 23 consecutive comm failures to the WWU
+2021-04-14T23:17:53 2021-04-14T23:17:53 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 24 consecutive comm failures to the WWU
+2021-04-14T23:17:53 2021-04-14T23:17:53 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: java.net.NoRouteToHostException: No route to host (Host unreachable)
+2021-04-14T23:18:36 2021-04-14T23:18:36 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 25 consecutive comm failures to the WWU
+2021-04-14T23:18:36 2021-04-14T23:18:36 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:18:41 2021-04-14T23:18:41 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:18:46 2021-04-14T23:18:46 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 26 consecutive comm failures to the WWU
+2021-04-14T23:18:56 2021-04-14T23:18:56 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 27 consecutive comm failures to the WWU
+2021-04-14T23:18:56 2021-04-14T23:18:56 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:19:06 2021-04-14T23:19:06 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 28 consecutive comm failures to the WWU
+2021-04-14T23:19:11 2021-04-14T23:19:11 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:19:16 2021-04-14T23:19:16 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 29 consecutive comm failures to the WWU
+2021-04-14T23:19:26 2021-04-14T23:19:26 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 30 consecutive comm failures to the WWU
+2021-04-14T23:19:27 2021-04-14T23:19:27 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:19:28 2021-04-14T23:19:28 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:19:36 2021-04-14T23:19:36 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 31 consecutive comm failures to the WWU
+2021-04-14T23:19:42 2021-04-14T23:19:42 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:19:46 2021-04-14T23:19:46 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 32 consecutive comm failures to the WWU
+2021-04-14T23:19:56 2021-04-14T23:19:56 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 33 consecutive comm failures to the WWU
+2021-04-14T23:19:57 2021-04-14T23:19:57 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: Path does not chain with any of the trust anchors
+2021-04-14T23:20:06 2021-04-14T23:20:06 172.23.0.1 [AID-NOTICE] AID-WWU: WWU WOW event received, state is true
+2021-04-14T23:20:06 2021-04-14T23:20:06 172.23.0.1 [AID-NOTICE] AID-WWU: AID-WWU set fault event received from AID1: eventType=fault; eventData={faultNumber:402, active:true, identifier:SIM_CARD_2_MISSING_OR_INOPERATIVE, description:SIM CARD 2 MISSING OR INOPERATIVE, condition:0, label:350, bit:22, sdi:0, criteria:AID-FWD CROWN, type:FAULT, }.  No ONS fault reporting impact
+2021-04-14T23:21:02 2021-04-14T23:21:02 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: java.net.NoRouteToHostException: No route to host (Host unreachable)
+2021-04-14T23:21:06 2021-04-14T23:21:06 172.23.0.1 [AID-NOTICE] AID-WWU: WWU: 1 consecutive comm failures to the WWU
+2021-04-14T23:21:12 2021-04-14T23:21:12 172.23.0.1 [AID-NOTICE] AID-WWU: Error retrieving WWU config: org.apache.commons.httpclient.ConnectTimeoutException: The host did not accept the connection within timeout of 60000 ms
+2021-04-14T23:21:31 2021-04-14T23:21:31 172.23.0.1 [AID-NOTICE] AID-WWU: WWU WOW event received, state is true
+2021-04-14T23:21:31 2021-04-14T23:21:31 172.23.0.1 [AID-NOTICE] AID-WWU: AID-WWU set fault event received from AID1: eventType=fault; eventData={faultNumber:402, active:true, identifier:SIM_CARD_2_MISSING_OR_INOPERATIVE, description:SIM CARD 2 MISSING OR INOPERATIVE, condition:0, label:350, bit:22, sdi:0, criteria:AID-FWD CROWN, type:FAULT, }.  No ONS fault reporting impact
+2021-04-14T23:21:32 2021-04-14T23:21:32 172.23.0.1 [AID-NOTICE] AID-WWU: WWU is entering operational state: config check passes and heart beat received
+2021-04-14T23:21:32 2021-04-14T23:21:32 172.23.0.1 [AID-NOTICE] AID-WWU: WWU reset event received
+2021-04-14T23:21:32 2021-04-14T23:21:32 172.23.0.1 [AID-NOTICE] AID-WWU: Successfully cleared all settings on the WWU
+2021-04-14T23:21:32 2021-04-14T23:21:32 172.23.0.1 [AID-NOTICE] AID-WWU: WWU Manager is initializing WWU
+2021-04-14T23:21:32 2021-04-14T23:21:32 172.23.0.1 [AID-NOTICE] AID-WWU: WWU state transitioning from Unconfigured to Initializing
+2021-04-14T23:21:40 2021-04-14T23:21:40 172.23.0.1 [AID-NOTICE] AID-WWU: Successfully set time server with {"ntpServers":["172.23.0.1"]}
+2021-04-14T23:21:40 2021-04-14T23:21:40 172.23.0.1 [AID-NOTICE] AID-WWU: Successfully set linkbehavior with {"linkPreference":["WiFi","Cellular"],"activeHysteresis":0,"inactiveHysteresis":0,"toggleThreshold":0}
+2021-04-14T23:21:40 2021-04-14T23:21:40 172.23.0.1 [AID-NOTICE] AID-WWU: Successfully set linkverification with {"linkVerification":[{"link":"Cellular","verifyMethod":"dns","timeOut":120,"hostName":"www.boeing.com"},{"link":"Wired","verifyMethod":"dns","timeOut":120,"hostName":"www.boeing.com"},{"link":"WiFi","verifyMethod":"dns","timeOut":120,"hostName":"www.boeing.com"}]}
+2021-04-14T23:21:40 2021-04-14T23:21:40 172.23.0.1 [AID-NOTICE] AID-WWU: Cellular- unloadProfilesFromWwu
+2021-04-14T23:21:40 2021-04-14T23:21:40 172.23.0.1 [AID-NOTICE] AID-WWU: WWU state transitioning from Initializing to Running
+2021-04-14T23:21:40 2021-04-14T23:21:40 172.23.0.1 [AID-NOTICE] AID-WWU: WWU enabling all configured links, WOW=true, currentLocation=null
+2021-04-14T23:21:40 2021-04-14T23:21:40 172.23.0.1 [AID-NOTICE] AID-WWU: Cellular- setting rfEnable to false
+2021-04-14T23:21:40 2021-04-14T23:21:40 172.23.0.1 [AID-NOTICE] AID-WWU: Cellular- unloadProfilesFromWwu
+2021-04-14T23:21:40 2021-04-14T23:21:40 172.23.0.1 [AID-NOTICE] AID-WWU: Cellular- loadProfilesToWwu, for location=null
+2021-04-14T23:21:40 2021-04-14T23:21:40 172.23.0.1 [AID-NOTICE] AID-WWU: Cellular- no profiles defined for null
+2021-04-14T23:21:50 2021-04-14T23:21:50 172.23.0.1 [AID-NOTICE] AID-WWU: Cellular- link state update occurred: current=UNAVAILABLE, new=IDLE
+2021-04-14T23:21:50 2021-04-14T23:21:50 172.23.0.1 [AID-NOTICE] AID-WWU: Cellular- link state changing from UNAVAILABLE to IDLE
+2021-04-14T23:21:56 2021-04-14T23:21:56 172.23.0.1 [AID-NOTICE] AID-WWU: Successfully sent periodic geolocation update to https://wwu.ons.pnet/v1/country
+2021-04-14T23:22:56 2021-04-14T23:22:56 172.23.0.1 [AID-NOTICE] AID-WWU: Successfully sent periodic geolocation update to https://wwu.ons.pnet/v1/country
