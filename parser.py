@@ -89,19 +89,20 @@ def grab_tar_files(source_directory, result_directory):
 def grab_log_files(directory):
     #Loop for each tar file in the log folder
     for file in os.listdir(directory):
-        tar_path = os.path.join(directory, file) #path of tar file
-        tar_file = tarfile.open(tar_path) #tar file object
-        tar_file_files = tar_file.getnames() #items in tar file
+        if file.endswith(".tgz"):
+            tar_path = os.path.join(directory, file) #path of tar file
+            tar_file = tarfile.open(tar_path) #tar file object
+            tar_file_files = tar_file.getnames() #items in tar file
 
-        #Checks for any aid log files in the tar file
-        for item in tar_file_files:
-            if ("app-aid-wwu") in item:
-                #Extracts them when found
-                tar_file.extract(item, path=directory)
+            #Checks for any aid log files in the tar file
+            for item in tar_file_files:
+                if ("app-aid-wwu") in item:
+                    #Extracts them when found
+                    tar_file.extract(item, path=directory)
 
-        #Closes and deletes tar file (necessary to stop recursion)
-        tar_file.close()
-        os.remove(tar_path)
+            #Closes and deletes tar file (necessary to stop recursion)
+            tar_file.close()
+            os.remove(tar_path)
 
 #Driver function which executes all relevant functions
 def driver(source, result):
