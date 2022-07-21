@@ -91,7 +91,7 @@ def grab_log_files(directory):
     for file in os.listdir(directory):
         if file.endswith(".tgz"):
             tar_path = os.path.join(directory, file) #path of tar file
-            tar_file = tarfile.open(tar_path) #tar file object
+            tar_file = tarfile.open(tar_path, 'r') #tar file object
             tar_file_files = tar_file.getnames() #items in tar file
 
             #Checks for any aid log files in the tar file
@@ -99,6 +99,7 @@ def grab_log_files(directory):
                 if ("app-aid-wwu") in item:
                     #Extracts them when found
                     tar_file.extract(item, path=directory)
+                    break #end the search here, only one aid-wwu is inside so no need to keep searching
 
             #Closes and deletes tar file (necessary to stop recursion)
             tar_file.close()
