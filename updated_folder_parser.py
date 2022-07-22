@@ -6,11 +6,14 @@ import xlsxwriter
 import pandas as pd
 import re
 
-path = r"C:\Users\walke\OneDrive\Desktop\txt-files"
+path = r"Logs"
+name = r"logFILEoutput.xlsx"
+
+#Moves the current working directory to the Logs folder in this case
 os.chdir(path)
 
 #Adding excel file for data to be imported into
-workbook = xlsxwriter.Workbook(r'C:\Users\walke\OneDrive\Desktop\logFILEoutput.xlsx')
+workbook = xlsxwriter.Workbook(name)
 # worksheet for all the parsed data
 worksheet1 = workbook.add_worksheet('Data')
 
@@ -259,15 +262,19 @@ def excel_formatting():
     workbook.close()
 
 
-# Goes through every file in the directory
+#Goes through every file in the current working directory
 for file in os.listdir():
     if file.endswith('.log') or file.endswith('.txt'):
         # Create the filepath of particular file
         file_path =f"{path}/{file}"
-        parse_files(file_path)
+        parse_files(file)
         file_name_list = file.split("-")
         tail_ID.append(file_name_list[0])
         LRU_type.append(file_name_list[4])
+
+#Moves the current working directory back by 1 ('..' does this) so the excel file
+#Is created in the original directory
+os.chdir('..')
 
 excel_formatting()
 
