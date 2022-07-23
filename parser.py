@@ -5,6 +5,11 @@ from tarfile import TarFile
 import os
 import re
 
+#Global variables
+SOURCE_DIR ='ZippedLogs'
+RESULT_DIR = 'Logs'
+FILE_TYPE = None
+
 #Function to unzip all the zips in the given directory
 def recursive_unzip_worker(directory):
     #Searches the whole directory
@@ -42,7 +47,7 @@ def recursive_unzip(directory):
         print("ZippedLogs folder didn't exist, creating now...")
         os.mkdir("ZippedLogs")
     
-    #3 checks done so user knows how the script runs
+    #4 checks done so user knows how the script runs
     input1 = input("Are the zip files placed in the ZippedLogs folder? (There may be multiple) Y/N: ")
     if (input1 != 'Y'):
         print("Cancelling operation")
@@ -53,11 +58,21 @@ def recursive_unzip(directory):
         print("Cancelling operation")
         return False
     
-    input3 = input("Final check. Y/N: ")
-    if(input3 != 'Y'):
-        print("Cancelling operation")
+    global FILE_TYPE
+    input3 = input("What is the LRU type? AWLU/AID: ")
+    if(input3 == "AWLU"):
+        FILE_TYPE = 'app-wwu'
+    elif(input3 == "AID"):
+        FILE_TYPE = 'app-aid-wwu'
+    else:
+        print("Invalid LRU type, cancelling operation")
         return False
     
+    input4 = input("Final check. Y/N: ")
+    if(input4 != 'Y'):
+        print("Cancelling operation")
+        return False
+
     else:
         #Runs unzip_directory until exists_zip is false
         print("Unzipping files..")
@@ -82,6 +97,12 @@ def grab_tar_files(source_directory, result_directory):
                 if re.search(r'\.tgz$', file):
                     file_path = os.path.join(root, file)
                     shutil.move(file_path, result_directory)
+
+                #In case there are some logs that aren't inside a TGZ file
+                #elif re.search(r'\.log', file):
+                #    file_path = os.path.join(root, file)
+                #    shutil.move(file_path, result_directory)
+
             except:
                 print("Error with shutil.move")
 
@@ -96,7 +117,7 @@ def grab_log_files(directory):
 
             #Checks for any aid log files in the tar file
             for item in tar_file_files:
-                if ("app-aid-wwu") in item:
+                if (FILE_TYPE) in item:
                     #Extracts them when found
                     tar_file.extract(item, path=directory)
                     break #end the search here, only one aid-wwu is inside so no need to keep searching
@@ -108,7 +129,7 @@ def grab_log_files(directory):
 #Driver function which executes all relevant functions
 def driver(source, result):
     #If the recursive unzip fails, cancel the operation
-    if not recursive_unzip(source_dir):
+    if not recursive_unzip(source):
         print("Error with unzipping, cancelling operation")
         return False
     
@@ -120,11 +141,8 @@ def driver(source, result):
     print("Creating excel sheet..")
 
     #Deletes the zipped logs directory as it's not needed anymore.
-    shutil.rmtree(source)
+    #shutil.rmtree(source)
 
-#Execution of script
-source_dir ='ZippedLogs'
-result_dir = 'Logs'
-
-driver(source_dir, result_dir)
-exec(open("updated_folder_parser.py").read())
+#Execution of code
+driver(SOURCE_DIR, RESULT_DIR)
+#exec(open("updated_folder_parser.py").read())
