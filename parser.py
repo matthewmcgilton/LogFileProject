@@ -1,3 +1,4 @@
+from msilib import add_stream
 import shutil
 import tarfile
 from zipfile import ZipFile
@@ -8,7 +9,8 @@ import re
 #Global variables
 SOURCE_DIR ='ZippedLogs'
 RESULT_DIR = 'Logs'
-FILE_TYPE = None
+AID_RESULT_DIR = 'AIDLogs'
+AWLU_RESULT_DIR = 'AWLULogs'
 
 #Function to unzip all the zips in the given directory
 def recursive_unzip_worker(directory):
@@ -58,18 +60,8 @@ def recursive_unzip(directory):
         print("Cancelling operation")
         return False
     
-    global FILE_TYPE
-    input3 = input("What is the LRU type? AWLU/AID: ")
-    if(input3 == "AWLU"):
-        FILE_TYPE = 'app-wwu'
-    elif(input3 == "AID"):
-        FILE_TYPE = 'app-aid-wwu'
-    else:
-        print("Invalid LRU type, cancelling operation")
-        return False
-    
-    input4 = input("Final check. Y/N: ")
-    if(input4 != 'Y'):
+    input3= input("Final check. Y/N: ")
+    if(input3 != 'Y'):
         print("Cancelling operation")
         return False
 
@@ -117,7 +109,7 @@ def grab_log_files(directory):
 
             #Checks for any aid log files in the tar file
             for item in tar_file_files:
-                if (FILE_TYPE) in item:
+                if (('app-aid-wwu') in item) or (('app-wwu') in item):
                     #Extracts them when found
                     tar_file.extract(item, path=directory)
                     break #end the search here, only one aid-wwu is inside so no need to keep searching
@@ -126,8 +118,23 @@ def grab_log_files(directory):
             tar_file.close()
             os.remove(tar_path)
 
+#Function to separate AID and AWLU log files
+def sort_log_files(source, aid, awlu):
+    #Create directory if it doesn't exist
+    if not os.path.exists(aid):
+        os.mkdir(aid)
+    if not os.path.exists(awlu):
+        os.mkdir(awlu)
+
+    for file in os.listdir(source):
+        path = os.path.join(source, file)
+        if ('aid-wwu') in file:
+            shutil.move(path, aid)
+        elif('app-wwu') in file:
+            shutil.move(path, awlu)
+
 #Driver function which executes all relevant functions
-def driver(source, result):
+def driver(source, result, aid, awlu):
     #If the recursive unzip fails, cancel the operation
     if not recursive_unzip(source):
         print("Error with unzipping, cancelling operation")
@@ -136,13 +143,15 @@ def driver(source, result):
     #Only runs if recursive unzip is successful
     print("Grabbing tar files..")
     grab_tar_files(source, result)
-    print("Grabbing log files..")
+    print("Opening tar files..")
     grab_log_files(result)
+    print("Separating log files..")
+    sort_log_files(result, aid, awlu)
     print("Creating excel sheet..")
 
     #Deletes the zipped logs directory as it's not needed anymore.
     shutil.rmtree(source)
 
 #Execution of code
-driver(SOURCE_DIR, RESULT_DIR)
+driver(SOURCE_DIR, RESULT_DIR, AID_RESULT_DIR, AWLU_RESULT_DIR)
 exec(open("updated_folder_parser.py").read())
