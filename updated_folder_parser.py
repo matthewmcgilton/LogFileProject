@@ -9,22 +9,21 @@ import re
 # This section can be un-commented for more optimized path
 #AID PATH
 #AWLU PATH
-#path = r"Logs"
+path = r"Logs"
 name = r"logFILEoutput.xlsx"
 
 #Direct Paths for testing purposes
 #path = "/Users/walkerbb2/Desktop/AWLU-Logs"
-path = r"C:\Users\walke\OneDrive\Desktop\txt-files"
-
+#path = r"C:\Users\walke\OneDrive\Desktop\txt-files"
 #work_path = "/Users/walkerbb2/Desktop/"
 
 #Moves the current working directory to the Logs folder in this case
 os.chdir(path)
 
 #Adding excel file for data to be imported into
-#workbook = xlsxwriter.Workbook(name)
+workbook = xlsxwriter.Workbook(name)
 #workbook = xlsxwriter.Workbook("/Users/walkerbb2/Desktop/AWLU-export.xlsx")
-workbook = xlsxwriter.Workbook(r"C:\Users\walke\OneDrive\Desktop\logFILEoutput.xlsx")
+#workbook = xlsxwriter.Workbook(r"C:\Users\walke\OneDrive\Desktop\logFILEoutput.xlsx")
 # worksheet for all the parsed data
 worksheet1 = workbook.add_worksheet('Data')
 
@@ -56,7 +55,7 @@ def AID_parse(file_path):
     worksheet1.write(1, 3, 'Cell Band (MHz)')
     worksheet1.write(1, 5, 'Airport ID')
     worksheet1.write(1, 6, 'Tail ID')
-    worksheet1.write(1, 7, 'LRU Type')
+    worksheet1.write(1, 7, 'Averages')
 
     # Set strings of what is being looked for
     AID_sigStr = "signalStrength"
@@ -124,6 +123,17 @@ def AID_parse(file_path):
                 else:
                     AID_airportID.append(line[index + 12:index + 15])
 
+    AID_file_sum = 0
+    # Finding the sum of the signal strengths for one specific file. Part of finding the file average
+    j = 0
+    AID_sig_len = len(AID_signalStrengths)
+    while j < AID_sig_len:
+        AID_file_sum += int(AID_signalStrengths[j])
+        j += 1
+
+    AID_average.append(AID_file_sum / len(AID_signalStrengths))
+    #print(AWLU_average)
+
 #Function that opens and prints file
 def AWLU_parse(file_path):
     print("AWLU Detected")
@@ -187,7 +197,7 @@ def AID_excel_formatting():
     AID_values = len(AID_signalStrengths)
     AID_airVAL = len(AID_airportID)
     AID_ID_len = len(AID_tail_ID)
-    AID_LRU_len = len(AID_LRU_type)
+    AID_average_len = len(AID_average)
     while j < AID_values:
         worksheet1.write(j + 2, 1, int(AID_signalStrengths[j]))
         worksheet1.write(j + 2, 2, int(AID_upTime[j]))
@@ -202,8 +212,8 @@ def AID_excel_formatting():
         worksheet1.write(j + 2,6, AID_tail_ID[j])
         j += 1
     j=0
-    while j < AID_LRU_len:
-        worksheet1.write(j + 2, 7, AID_LRU_type[j])
+    while j < AID_average_len:
+        worksheet1.write(j + 2, 7, AID_average[j])
         j += 1
 
     worksheet1.set_column('B:B', 20)
@@ -234,6 +244,8 @@ def AID_excel_formatting():
         if int(AID_upTime[j]) < int(AID_upTime[j - 1]):
             AID_waypoints.append(j)
         j += 1
+
+    j = 0
 
     #print(waypoints)
     way_len = len(AID_waypoints)
@@ -340,6 +352,7 @@ def AWLU_excel_formatting():
     worksheet1.write(0, 10, 'AWLU DATA')
     worksheet1.write(1, 10, 'Signal Strength (dBm)')
     worksheet1.write(1, 11, 'Data Points')
+    worksheet1.write(1, 12, 'Averages (dBm)')
 
     # Set strings of what is being looked for
     sigStr = "Signal Strength"
@@ -351,7 +364,7 @@ def AWLU_excel_formatting():
     # Adding data arrays to spreadsheet
     j = 0
     AWLU_values = len(AWLU_signalStrengths)
-
+    AWLU_average_len = len(AWLU_average)
 #Doesnt work, place holder for conversation
     while j < AWLU_values:
         if int(AWLU_signalStrengths[j]) < int(AWLU_signalStrengths[j - 1]):
@@ -359,6 +372,12 @@ def AWLU_excel_formatting():
 
         j += 1
     j=1
+
+    j=0
+    while j < AWLU_average_len:
+        worksheet1.write(j + 2, 12, AWLU_average[j])
+        j += 1
+
     while j < len(AWLU_waypoints):
 #This doesnt help at all, signal strength getting lower doesn't mean that the signal has reset
         #series_len = AWLU_waypoints[j]-AID_waypoints[j-1]
@@ -379,6 +398,7 @@ def AWLU_excel_formatting():
 
     worksheet1.set_column('K:K', 20)
     worksheet1.set_column('L:L', 10.29)
+    worksheet1.set_column('M:M', 13.91)
 
 
     # Adding chart object to file, and setting x and y axis titles
@@ -446,6 +466,7 @@ def AWLU_excel_formatting():
         j += 1
 
     worksheet1.insert_chart('P30', chart)
+    #worksheet1.insert_chart('Z30', chart3)
 
 
 indicator_val = 3
@@ -465,14 +486,37 @@ for file in os.listdir():
             AWLU_parse(file)
             indicator_val = 1
 
+""" 
+AWLU_average_len = len(AWLU_average)
+AID_average_len = len(AID_average)
+# Adding chart object to file, and setting x and y axis titles
+chart3 = workbook.add_chart({'type': 'scatter', 'subtype': 'straight'})
+chart3.set_x_axis({
+    'name': 'Data Points',
+    'name_font': {'size': 14, 'bold': True},
+    'num_font': {'italic': True},
+})
+chart3.set_y_axis({
+    'name': 'Average Signal Strength (dBm)',
+    'name_font': {'size': 14, 'bold': True},
+    'num_font': {'italic': True},
+})
+chart3.set_size({'width': 600, 'height': 350})
+chart3.set_title({'name': 'Average Signal Strengths'})
+
+
+chart3.add_series({
+    'name': 'AWLU',
+    'categories': ['Data', 2, 11, AWLU_average_len + 1, 11],
+    'values': ['Data', 2, 12, AWLU_average_len + 1, 12],
+})
+chart3.add_series({
+    'name': 'AID',
+    'categories': ['Data', 2, 11, AID_average_len + 1, 11],
+    'values': ['Data', 2, 7, AID_average_len + 1, 7],
+})
 """
-if indicator_val == 1:
-    AWLU_excel_formatting()
-elif indicator_val == 0:
-    AID_excel_formatting()
-else:
-    print("File not recognized")
-"""
+
 AWLU_excel_formatting()
 AID_excel_formatting()
 #Moves the current working directory back by 1 ('..' does this) so the excel file
@@ -480,11 +524,11 @@ AID_excel_formatting()
 os.chdir('..')
 
 
-#print(tail_ID)
-#print(LRU_type)
-#print(upTime)
-print(AWLU_average)
 
+
+
+print(AWLU_average)
+print(AID_average)
 #Use timestamp for AWLU uptime - hard with the time, with it goes from 23:59:59 to 00:00:01, it gets fucked
 #Average of each series per time
 #Matpplotlib
