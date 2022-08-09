@@ -1,11 +1,11 @@
 #This file will be able to take a file with many text files in it and go through each of them and parse their info
 
+
 import os
 import xlsxwriter
 #import pandas as pd
 import re
 
-<<<<<<< HEAD
 # This section can be un-commented for more optimized path
 #AID PATH
 #AWLU PATH
@@ -18,22 +18,13 @@ path = r"C:\Users\walke\OneDrive\Desktop\txt-files"
 
 #work_path = "/Users/walkerbb2/Desktop/"
 
-=======
-path = r"Logs"
-name = r"logFILEoutput.xlsx"
-
->>>>>>> 4246a90bb314c35cc144e128e3967285bef69306
 #Moves the current working directory to the Logs folder in this case
 os.chdir(path)
 
 #Adding excel file for data to be imported into
-<<<<<<< HEAD
 #workbook = xlsxwriter.Workbook(name)
 #workbook = xlsxwriter.Workbook("/Users/walkerbb2/Desktop/AWLU-export.xlsx")
 workbook = xlsxwriter.Workbook(r"C:\Users\walke\OneDrive\Desktop\logFILEoutput.xlsx")
-=======
-workbook = xlsxwriter.Workbook(name)
->>>>>>> 4246a90bb314c35cc144e128e3967285bef69306
 # worksheet for all the parsed data
 worksheet1 = workbook.add_worksheet('Data')
 
@@ -344,7 +335,6 @@ def AID_excel_formatting():
     workbook.close()
 
 
-<<<<<<< HEAD
 def AWLU_excel_formatting():
     # adding spreadsheet headings
     worksheet1.write(0, 10, 'AWLU DATA')
@@ -462,14 +452,6 @@ indicator_val = 3
 #input1 = input("Are the log files AID or AWLU? (Type AID or AWLU): ")
 for file in os.listdir():
     if file.endswith('.log') or file.endswith('.txt'):
-=======
-#Goes through every file in the current working directory
-for file in os.listdir():
-    if file.endswith('.log') or file.endswith('.txt'):
-        # Create the filepath of particular file
-        file_path =f"{path}/{file}"
-        parse_files(file)
->>>>>>> 4246a90bb314c35cc144e128e3967285bef69306
         file_name_list = file.split("-")
         if file_name_list[4] == 'aid':
             # Goes through every file in the current working directory, create the filepath of particular file
@@ -477,19 +459,11 @@ for file in os.listdir():
             AID_parse(file)
             indicator_val = 0
 
-<<<<<<< HEAD
         elif file_name_list[4] == 'app':
             # Goes through every file in the current working directory, create the filepath of particular file
             file_path = f"{path}/{file}"
             AWLU_parse(file)
             indicator_val = 1
-=======
-#Moves the current working directory back by 1 ('..' does this) so the excel file
-#Is created in the original directory
-os.chdir('..')
-
-excel_formatting()
->>>>>>> 4246a90bb314c35cc144e128e3967285bef69306
 
 """
 if indicator_val == 1:
