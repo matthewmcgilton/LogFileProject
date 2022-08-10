@@ -9,21 +9,22 @@ import re
 # This section can be un-commented for more optimized path
 #AID PATH
 #AWLU PATH
-path = r"Logs"
-name = r"logFILEoutput.xlsx"
+#path = r"Logs"
+#path = r"AWLULogs"
+#name = r"logFILEoutput.xlsx"
 
 #Direct Paths for testing purposes
 #path = "/Users/walkerbb2/Desktop/AWLU-Logs"
-#path = r"C:\Users\walke\OneDrive\Desktop\txt-files"
+path = r"C:\Users\walke\OneDrive\Desktop\new-txt-files"
 #work_path = "/Users/walkerbb2/Desktop/"
 
 #Moves the current working directory to the Logs folder in this case
 os.chdir(path)
 
 #Adding excel file for data to be imported into
-workbook = xlsxwriter.Workbook(name)
+#workbook = xlsxwriter.Workbook(name)
 #workbook = xlsxwriter.Workbook("/Users/walkerbb2/Desktop/AWLU-export.xlsx")
-#workbook = xlsxwriter.Workbook(r"C:\Users\walke\OneDrive\Desktop\logFILEoutput.xlsx")
+workbook = xlsxwriter.Workbook(r"C:\Users\walke\OneDrive\Desktop\logFILEoutput.xlsx")
 # worksheet for all the parsed data
 worksheet1 = workbook.add_worksheet('Data')
 
@@ -131,7 +132,8 @@ def AID_parse(file_path):
         AID_file_sum += int(AID_signalStrengths[j])
         j += 1
 
-    AID_average.append(AID_file_sum / len(AID_signalStrengths))
+    if len(AID_signalStrengths) > 0:
+        AID_average.append(AID_file_sum / len(AID_signalStrengths))
     #print(AWLU_average)
 
 #Function that opens and prints file
@@ -151,6 +153,9 @@ def AWLU_parse(file_path):
             if sigStr in line:
                 # This messy section of code finds the value of the SIGNAL STRENGTH and only inputs the value into the array rather than random characters as well because the length of value changes (def could be easier by idk)
                 index = (line.find(sigStr))
+                if line[index + 16:index + 19] == "N/A":
+                    continue
+
                 if line[index + 19].isalpha():
                     if line[index + 18].isalpha():
                         if line[index + 17].isalpha():
@@ -182,7 +187,8 @@ def AWLU_parse(file_path):
     j = 0
     sig_len = len(AWLU_signalStrengths)
     while j < sig_len:
-        file_sum += int(AWLU_signalStrengths[j])
+        if AWLU_signalStrengths[j] != ",":
+            file_sum += int(AWLU_signalStrengths[j])
         j += 1
 
     AWLU_average.append(file_sum / len(AWLU_signalStrengths))
@@ -367,7 +373,7 @@ def AWLU_excel_formatting():
     AWLU_average_len = len(AWLU_average)
 #Doesnt work, place holder for conversation
     while j < AWLU_values:
-        if int(AWLU_signalStrengths[j]) < int(AWLU_signalStrengths[j - 1]):
+        if AWLU_signalStrengths[j] != "," and AWLU_signalStrengths[j - 1] != "," and int(AWLU_signalStrengths[j]) < int(AWLU_signalStrengths[j - 1]):
             AWLU_waypoints.append(j)
 
         j += 1
@@ -375,6 +381,7 @@ def AWLU_excel_formatting():
 
     j=0
     while j < AWLU_average_len:
+
         worksheet1.write(j + 2, 12, AWLU_average[j])
         j += 1
 
@@ -392,8 +399,9 @@ def AWLU_excel_formatting():
     # LRU_len = len(LRU_type)
     j = 0
     while j < AWLU_values:
-        worksheet1.write(j + 2, 10, int(AWLU_signalStrengths[j]))
-        worksheet1.write(j + 2, 11, j)
+        if AWLU_signalStrengths[j] != ",":
+            worksheet1.write(j + 2, 10, int(AWLU_signalStrengths[j]))
+            worksheet1.write(j + 2, 11, j)
         j += 1
 
     worksheet1.set_column('K:K', 20)
@@ -466,10 +474,13 @@ def AWLU_excel_formatting():
         j += 1
 
     worksheet1.insert_chart('P30', chart)
-    #worksheet1.insert_chart('Z30', chart3)
+    worksheet1.insert_chart('Z30', chart3)
 
+AID_indicator = 0
+AID_indicator_array = [0]
+AWLU_indicator = 0
+AWLU_indicator_array = [0]
 
-indicator_val = 3
 #input1 = input("Are the log files AID or AWLU? (Type AID or AWLU): ")
 for file in os.listdir():
     if file.endswith('.log') or file.endswith('.txt'):
@@ -478,15 +489,17 @@ for file in os.listdir():
             # Goes through every file in the current working directory, create the filepath of particular file
             file_path = f"{path}/{file}"
             AID_parse(file)
-            indicator_val = 0
+            AID_indicator += 1
+            AID_indicator_array.append(AID_indicator)
 
         elif file_name_list[4] == 'app':
             # Goes through every file in the current working directory, create the filepath of particular file
             file_path = f"{path}/{file}"
             AWLU_parse(file)
-            indicator_val = 1
+            AWLU_indicator += 1
+            AWLU_indicator_array.append(AWLU_indicator)
 
-""" 
+
 AWLU_average_len = len(AWLU_average)
 AID_average_len = len(AID_average)
 # Adding chart object to file, and setting x and y axis titles
@@ -515,7 +528,7 @@ chart3.add_series({
     'categories': ['Data', 2, 11, AID_average_len + 1, 11],
     'values': ['Data', 2, 7, AID_average_len + 1, 7],
 })
-"""
+
 
 AWLU_excel_formatting()
 AID_excel_formatting()
@@ -529,7 +542,3 @@ os.chdir('..')
 
 print(AWLU_average)
 print(AID_average)
-#Use timestamp for AWLU uptime - hard with the time, with it goes from 23:59:59 to 00:00:01, it gets fucked
-#Average of each series per time
-#Matpplotlib
-#check for the log name to automatically DONE. Uses the indicator_val, maybe can be changed?
