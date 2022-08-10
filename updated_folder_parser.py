@@ -10,21 +10,22 @@ import re
 #AID PATH
 #AWLU PATH
 #path = r"Logs"
-#path = r"AWLULogs"
-#name = r"logFILEoutput.xlsx"
+AWLU_path = r"AWLULogs"
+AID_path = r"AIDLogs"
+name = r"logFILEoutput.xlsx"
 
 #Direct Paths for testing purposes
 #path = "/Users/walkerbb2/Desktop/AWLU-Logs"
-path = r"C:\Users\walke\OneDrive\Desktop\new-txt-files"
+#path = r"C:\Users\walke\OneDrive\Desktop\new-txt-files"
 #work_path = "/Users/walkerbb2/Desktop/"
 
 #Moves the current working directory to the Logs folder in this case
-os.chdir(path)
+#os.chdir(path)
 
 #Adding excel file for data to be imported into
-#workbook = xlsxwriter.Workbook(name)
+workbook = xlsxwriter.Workbook(name)
 #workbook = xlsxwriter.Workbook("/Users/walkerbb2/Desktop/AWLU-export.xlsx")
-workbook = xlsxwriter.Workbook(r"C:\Users\walke\OneDrive\Desktop\logFILEoutput.xlsx")
+#workbook = xlsxwriter.Workbook(r"C:\Users\walke\OneDrive\Desktop\logFILEoutput.xlsx")
 # worksheet for all the parsed data
 worksheet1 = workbook.add_worksheet('Data')
 
@@ -481,23 +482,23 @@ AID_indicator_array = [0]
 AWLU_indicator = 0
 AWLU_indicator_array = [0]
 
+os.chdir(AID_path)
 #input1 = input("Are the log files AID or AWLU? (Type AID or AWLU): ")
 for file in os.listdir():
-    if file.endswith('.log') or file.endswith('.txt'):
-        file_name_list = file.split("-")
-        if file_name_list[4] == 'aid':
-            # Goes through every file in the current working directory, create the filepath of particular file
-            file_path = f"{path}/{file}"
-            AID_parse(file)
-            AID_indicator += 1
-            AID_indicator_array.append(AID_indicator)
+    # Goes through every file in the current working directory, create the filepath of particular file
+    file_path = f"{AID_path}/{file}"
+    AID_parse(file)
+    AID_indicator += 1
+    AID_indicator_array.append(AID_indicator)
 
-        elif file_name_list[4] == 'app':
-            # Goes through every file in the current working directory, create the filepath of particular file
-            file_path = f"{path}/{file}"
-            AWLU_parse(file)
-            AWLU_indicator += 1
-            AWLU_indicator_array.append(AWLU_indicator)
+os.chdir('..')
+os.chdir(AWLU_path)
+for file in os.listdir():
+    # Goes through every file in the current working directory, create the filepath of particular file
+    file_path = f"{AWLU_path}/{file}"
+    AWLU_parse(file)
+    AWLU_indicator += 1
+    AWLU_indicator_array.append(AWLU_indicator)
 
 
 AWLU_average_len = len(AWLU_average)
