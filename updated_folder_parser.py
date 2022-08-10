@@ -499,7 +499,7 @@ for file in os.listdir():
     AWLU_parse(file)
     AWLU_indicator += 1
     AWLU_indicator_array.append(AWLU_indicator)
-
+os.chdir('..')
 
 AWLU_average_len = len(AWLU_average)
 AID_average_len = len(AID_average)

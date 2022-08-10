@@ -1,4 +1,3 @@
-from msilib import add_stream
 import shutil
 import tarfile
 from zipfile import ZipFile
