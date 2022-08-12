@@ -63,6 +63,7 @@ def AID_parse(file_path):
     AID_sigStr = "signalStrength"
     upTm = "upTime"
     cellBND = 'cellBand'
+    sigIN = 'bytesRX'
     airID = 'airportID'
 
     with open(file_path, 'r') as log_file:
@@ -116,7 +117,23 @@ def AID_parse(file_path):
                         AID_cellBand.append(line[index + 9:index + 12])
                 else:
                     AID_cellBand.append(line[index + 9:index + 13])
-
+                """
+                # This messy section of code finds the value of the Tranfer Speed IN and only inputs the value into the array rather than random characters as well because the length of value changes (def could be easier by idk)
+                index = (line.find(sigIN))
+                if line[index + 13].isalpha():
+                    if line[index + 12].isalpha():
+                        if line[index + 11].isalpha():
+                            if line[index + 10].isalpha():
+                                print('Not Found')
+                            else:
+                                AID_cellBand.append(line[index + 9:index + 10])
+                        else:
+                            AID_cellBand.append(line[index + 9:index + 11])
+                    else:
+                        AID_cellBand.append(line[index + 9:index + 12])
+                else:
+                    AID_cellBand.append(line[index + 9:index + 13])
+                """
             if airID in line:
                 # This messy section of code finds the value of the AIRPORT ID and only inputs the value into the array rather than random characters as well because the length of value changes (def could be easier by idk)
                 index = (line.find(airID))
@@ -145,7 +162,7 @@ def AWLU_parse(file_path):
     sigStr = "Signal Strength"
     airID = 'airportID'
     AWLU_up = []
-    file_sum = 0
+    AWLU_file_sum = 0
 
     with open(file_path, 'r') as log_file:
         lines = log_file.readlines()
@@ -188,12 +205,14 @@ def AWLU_parse(file_path):
     j = 0
     sig_len = len(AWLU_signalStrengths)
     while j < sig_len:
+        #if AWLU_indicator_array[j] > AWLU_indicator_array[j-1]:
+        #    file_sum = 0
         if AWLU_signalStrengths[j] != ",":
-            file_sum += int(AWLU_signalStrengths[j])
+            AWLU_file_sum += int(AWLU_signalStrengths[j])
         j += 1
 
-    AWLU_average.append(file_sum / len(AWLU_signalStrengths))
-    #print(AWLU_average)
+    if len(AWLU_signalStrengths) != 0:
+        AWLU_average.append(AWLU_file_sum / len(AWLU_signalStrengths))
 
 
 #This function formats and creates all of the graphs for the excel spreadsheet
@@ -424,34 +443,7 @@ def AWLU_excel_formatting():
     })
     chart.set_size({'width': 600, 'height': 350})
     chart.set_title({'name': 'AWLU Signal Strength Variation'})
-    """
-    j = 0
-    waypoints = []
 
-    # Finding places where the system starts and stops again through finding where Up Time variable restarts its clock
-    while j < values:
-        if int(upTime[j]) < int(upTime[j - 1]):
-            waypoints.append(j)
-        j += 1
-
-    # print(waypoints)
-    way_len = len(waypoints)
-    i = 0
-
-    # Creates a series in the graph for each time the AID system turns on/off in the specific log file
-    while i < way_len:
-        if i < way_len - 1:
-            chart.add_series({
-                'categories': ['Data', waypoints[i] + 2, 2, waypoints[i + 1] + 1, 2],
-                'values': ['Data', waypoints[i] + 2, 1, waypoints[i + 1] + 1, 1],
-            })
-        else:
-            chart.add_series({
-                'categories': ['Data', waypoints[i] + 2, 2, values + 1, 2],
-                'values': ['Data', waypoints[i] + 2, 1, values + 1, 1],
-            })
-        i += 1
-    """
     i = 0
     # Creates a series in the graph for each time the AID system turns on/off in the specific log file
     AWLU_Sig_len = len(AWLU_signalStrengths)
@@ -487,6 +479,7 @@ os.chdir(AID_path)
 for file in os.listdir():
     # Goes through every file in the current working directory, create the filepath of particular file
     file_path = f"{AID_path}/{file}"
+    AID_file_sum = 0
     AID_parse(file)
     AID_indicator += 1
     AID_indicator_array.append(AID_indicator)
@@ -496,6 +489,7 @@ os.chdir(AWLU_path)
 for file in os.listdir():
     # Goes through every file in the current working directory, create the filepath of particular file
     file_path = f"{AWLU_path}/{file}"
+    AWLU_file_sum = 0
     AWLU_parse(file)
     AWLU_indicator += 1
     AWLU_indicator_array.append(AWLU_indicator)
