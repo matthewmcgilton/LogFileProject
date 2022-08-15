@@ -16,7 +16,8 @@ name = r"logFILEoutput.xlsx"
 
 #Direct Paths for testing purposes
 #path = "/Users/walkerbb2/Desktop/AWLU-Logs"
-#path = r"C:\Users\walke\OneDrive\Desktop\new-txt-files"
+#AWLU_path = r"C:\Users\walke\OneDrive\Desktop\awlu-txt-files"
+#AID_path = r"C:\Users\walke\OneDrive\Desktop\aid-txt-files"
 #work_path = "/Users/walkerbb2/Desktop/"
 
 #Moves the current working directory to the Logs folder in this case
@@ -37,6 +38,8 @@ AID_airportID = []
 AID_tail_ID = []
 AID_LRU_type = []
 AID_average = []
+AID_bytesRx = []
+AID_bytesTx = []
 
 # create arrays for AWLU important variables
 AWLU_signalStrengths = []
@@ -46,24 +49,19 @@ AWLU_airportID = []
 AWLU_tail_ID = []
 AWLU_LRU_type = []
 AWLU_average = []
+AWLU_bytesIN = []
+AWLU_bytesOUT = []
 
 #Function that opens and prints file
 def AID_parse(file_path):
-    print("AID File Detected")
-    # adding spreadsheet headings
-    worksheet1.write(0, 1, 'AID DATA')
-    worksheet1.write(1, 1, 'Signal Strength (dBm)')
-    worksheet1.write(1, 2, 'Up Time (sec)')
-    worksheet1.write(1, 3, 'Cell Band (MHz)')
-    worksheet1.write(1, 5, 'Airport ID')
-    worksheet1.write(1, 6, 'Tail ID')
-    worksheet1.write(1, 7, 'Averages')
+    #print("AID File Detected")
 
     # Set strings of what is being looked for
     AID_sigStr = "signalStrength"
     upTm = "upTime"
     cellBND = 'cellBand'
-    sigIN = 'bytesRX'
+    sigIN = 'bytesRx'
+    sigOUT = 'bytesTx'
     airID = 'airportID'
 
     with open(file_path, 'r') as log_file:
@@ -117,23 +115,63 @@ def AID_parse(file_path):
                         AID_cellBand.append(line[index + 9:index + 12])
                 else:
                     AID_cellBand.append(line[index + 9:index + 13])
-                """
+
                 # This messy section of code finds the value of the Tranfer Speed IN and only inputs the value into the array rather than random characters as well because the length of value changes (def could be easier by idk)
                 index = (line.find(sigIN))
-                if line[index + 13].isalpha():
-                    if line[index + 12].isalpha():
-                        if line[index + 11].isalpha():
-                            if line[index + 10].isalpha():
-                                print('Not Found')
+                if line[index + 17].isalpha():
+                    if line[index + 16].isalpha():
+                        if line[index + 15].isalpha():
+                            if line[index + 14].isalpha():
+                                if line[index + 13].isalpha():
+                                    if line[index + 12].isalpha():
+                                        if line[index + 11].isalpha():
+                                            if line[index + 10].isalpha():
+                                                print('Not Found')
+                                            else:
+                                                AID_bytesRx.append(line[index + 8:index + 9])
+                                        else:
+                                            AID_bytesRx.append(line[index + 8:index + 10])
+                                    else:
+                                        AID_bytesRx.append(line[index + 8:index + 11])
+                                else:
+                                    AID_bytesRx.append(line[index + 8:index + 12])
                             else:
-                                AID_cellBand.append(line[index + 9:index + 10])
+                                AID_bytesRx.append(line[index + 8:index + 13])
                         else:
-                            AID_cellBand.append(line[index + 9:index + 11])
+                            AID_bytesRx.append(line[index + 8:index + 14])
                     else:
-                        AID_cellBand.append(line[index + 9:index + 12])
+                        AID_bytesRx.append(line[index + 8:index + 15])
                 else:
-                    AID_cellBand.append(line[index + 9:index + 13])
-                """
+                    AID_bytesRx.append(line[index + 8:index + 16])
+
+                # This messy section of code finds the value of the Tranfer Speed OUT and only inputs the value into the array rather than random characters as well because the length of value changes (def could be easier by idk)
+                index = (line.find(sigOUT))
+                if line[index + 17].isalpha():
+                    if line[index + 16].isalpha():
+                        if line[index + 15].isalpha():
+                            if line[index + 14].isalpha():
+                                if line[index + 13].isalpha():
+                                    if line[index + 12].isalpha():
+                                        if line[index + 11].isalpha():
+                                            if line[index + 10].isalpha():
+                                                print('Not Found')
+                                            else:
+                                                AID_bytesTx.append(line[index + 8:index + 9])
+                                        else:
+                                            AID_bytesTx.append(line[index + 8:index + 10])
+                                    else:
+                                        AID_bytesTx.append(line[index + 8:index + 11])
+                                else:
+                                    AID_bytesTx.append(line[index + 8:index + 12])
+                            else:
+                                AID_bytesTx.append(line[index + 8:index + 13])
+                        else:
+                            AID_bytesTx.append(line[index + 8:index + 14])
+                    else:
+                        AID_bytesTx.append(line[index + 8:index + 15])
+                else:
+                    AID_bytesTx.append(line[index + 8:index + 16])
+
             if airID in line:
                 # This messy section of code finds the value of the AIRPORT ID and only inputs the value into the array rather than random characters as well because the length of value changes (def could be easier by idk)
                 index = (line.find(airID))
@@ -152,15 +190,16 @@ def AID_parse(file_path):
 
     if len(AID_signalStrengths) > 0:
         AID_average.append(AID_file_sum / len(AID_signalStrengths))
-    #print(AWLU_average)
 
 #Function that opens and prints file
 def AWLU_parse(file_path):
-    print("AWLU Detected")
+    #print("AWLU Detected")
 
     # Set strings of what is being looked for
     sigStr = "Signal Strength"
     airID = 'airportID'
+    dataIN = 'Bytes Received'
+    dataOUT = 'Bytes Sent'
     AWLU_up = []
     AWLU_file_sum = 0
 
@@ -184,6 +223,30 @@ def AWLU_parse(file_path):
                         AWLU_signalStrengths.append(line[index + 16:index + 18])
                 else:
                     AWLU_signalStrengths.append(line[index + 16:index + 19])
+                """
+                # This messy section of code finds the value of the Tranfer Speed IN and only inputs the value into the array rather than random characters as well because the length of value changes (def could be easier by idk)
+                index = (line.find(dataIN))
+                #print(line[index + 21])
+                if line[index + 23] == " ":
+                    if line[index + 22] == " ":
+                        if line[index + 21] == " ":
+                            if line[index + 20] == " ":
+                                if line[index + 19] == " ":
+                                    if line[index + 18] == " ":
+                                        print('Not Found')
+                                    else:
+                                        AWLU_bytesIN.append(line[index + 16:index + 17])
+                                else:
+                                    AWLU_bytesIN.append(line[index + 16:index + 18])
+                            else:
+                                AWLU_bytesIN.append(line[index + 16:index + 19])
+                        else:
+                            AWLU_bytesIN.append(line[index + 16:index + 20])
+                    else:
+                        AWLU_bytesIN.append(line[index + 16:index + 21])
+                else:
+                    AWLU_bytesIN.append(line[index + 16:index + 22])
+                """
 
                 #Time appears to be in HH:MM:SS Time format
                 seconds = 0
@@ -214,9 +277,20 @@ def AWLU_parse(file_path):
     if len(AWLU_signalStrengths) != 0:
         AWLU_average.append(AWLU_file_sum / len(AWLU_signalStrengths))
 
-
+    #print(AWLU_bytesIN)
 #This function formats and creates all of the graphs for the excel spreadsheet
 def AID_excel_formatting():
+
+    # adding spreadsheet headings
+    worksheet1.write(0, 1, 'AID DATA')
+    worksheet1.write(1, 1, 'Signal Strength (dBm)')
+    worksheet1.write(1, 2, 'Up Time (sec)')
+    worksheet1.write(1, 3, 'Cell Band (MHz)')
+    worksheet1.write(1, 4, 'Data IN (Bytes)')
+    worksheet1.write(1, 5, 'Data OUT (Bytes)')
+    worksheet1.write(1, 7, 'Airport ID')
+    worksheet1.write(1, 8, 'Tail ID')
+    worksheet1.write(1, 9, 'Averages')
 
     # Adding data arrays to spreadsheet
     j = 0
@@ -228,24 +302,27 @@ def AID_excel_formatting():
         worksheet1.write(j + 2, 1, int(AID_signalStrengths[j]))
         worksheet1.write(j + 2, 2, int(AID_upTime[j]))
         worksheet1.write(j + 2, 3, int(AID_cellBand[j]))
+        worksheet1.write(j + 2, 4, int(AID_bytesRx[j]))
+        worksheet1.write(j + 2, 5, int(AID_bytesTx[j]))
         j += 1
     j = 0
     while j < AID_airVAL:
-        worksheet1.write(j + 2, 5, AID_airportID[j])
+        worksheet1.write(j + 2, 7, AID_airportID[j])
         j += 1
     j = 0
     while j < AID_ID_len:
-        worksheet1.write(j + 2,6, AID_tail_ID[j])
+        worksheet1.write(j + 2,8, AID_tail_ID[j])
         j += 1
     j=0
     while j < AID_average_len:
-        worksheet1.write(j + 2, 7, AID_average[j])
+        worksheet1.write(j + 2, 9, AID_average[j])
         j += 1
 
     worksheet1.set_column('B:B', 20)
     worksheet1.set_column('C:C', 12.43)
     worksheet1.set_column('D:D', 14.5)
-    worksheet1.set_column('F:F', 8.65)
+    worksheet1.set_column('E:E', 13.6)
+    worksheet1.set_column('F:F', 15.3)
 
     # Adding chart object to file, and setting x and y axis titles
     chart = workbook.add_chart({'type': 'scatter', 'subtype': 'straight'})
@@ -367,18 +444,18 @@ def AID_excel_formatting():
 
     }
     #Adding charts to file
-    worksheet1.insert_chart('P11',chart)
-    worksheet1.insert_chart('Z11',chart2)
-    worksheet1.insert_textbox('P2',textbox_text, options)
-    workbook.close()
+    worksheet1.insert_chart('T11',chart)
+    worksheet1.insert_chart('AD11',chart2)
+    worksheet1.insert_textbox('T2',textbox_text, options)
+    #workbook.close()
 
 
 def AWLU_excel_formatting():
     # adding spreadsheet headings
-    worksheet1.write(0, 10, 'AWLU DATA')
-    worksheet1.write(1, 10, 'Signal Strength (dBm)')
-    worksheet1.write(1, 11, 'Data Points')
-    worksheet1.write(1, 12, 'Averages (dBm)')
+    worksheet1.write(0, 12, 'AWLU DATA')
+    worksheet1.write(1, 12, 'Signal Strength (dBm)')
+    worksheet1.write(1, 13, 'Data Points')
+    worksheet1.write(1, 14, 'Averages (dBm)')
 
     # Set strings of what is being looked for
     sigStr = "Signal Strength"
@@ -390,28 +467,13 @@ def AWLU_excel_formatting():
     # Adding data arrays to spreadsheet
     j = 0
     AWLU_values = len(AWLU_signalStrengths)
+    AID_values = len(AID_signalStrengths)
     AWLU_average_len = len(AWLU_average)
-#Doesnt work, place holder for conversation
-    while j < AWLU_values:
-        if AWLU_signalStrengths[j] != "," and AWLU_signalStrengths[j - 1] != "," and int(AWLU_signalStrengths[j]) < int(AWLU_signalStrengths[j - 1]):
-            AWLU_waypoints.append(j)
-
-        j += 1
-    j=1
-
     j=0
     while j < AWLU_average_len:
 
-        worksheet1.write(j + 2, 12, AWLU_average[j])
+        worksheet1.write(j + 2, 14, AWLU_average[j])
         j += 1
-
-    while j < len(AWLU_waypoints):
-#This doesnt help at all, signal strength getting lower doesn't mean that the signal has reset
-        #series_len = AWLU_waypoints[j]-AID_waypoints[j-1]
-        #series_averages.append(series_len)
-        j += 1
-
-
 
     #Yikes, need to figure out uptime
     # airVAL = len(airportID)
@@ -420,13 +482,25 @@ def AWLU_excel_formatting():
     j = 0
     while j < AWLU_values:
         if AWLU_signalStrengths[j] != ",":
-            worksheet1.write(j + 2, 10, int(AWLU_signalStrengths[j]))
-            worksheet1.write(j + 2, 11, j)
+            worksheet1.write(j + 2, 12, int(AWLU_signalStrengths[j]))
+            #worksheet1.write(j + 2, 13, j)
         j += 1
 
-    worksheet1.set_column('K:K', 20)
-    worksheet1.set_column('L:L', 10.29)
-    worksheet1.set_column('M:M', 13.91)
+    #This takes care of the fringe case that there are more AWLU values than AID. This will allow the graphs to work as needed
+    j = 0
+    if AWLU_values >= AID_values:
+        while j < AWLU_values:
+            worksheet1.write(j + 2, 13, j)
+            j += 1
+
+    elif AID_values > AWLU_values:
+        while j < AID_values:
+            worksheet1.write(j + 2, 13, j)
+            j += 1
+
+    worksheet1.set_column('M:M', 20)
+    worksheet1.set_column('N:N', 10.29)
+    worksheet1.set_column('O:O', 14.43)
 
 
     # Adding chart object to file, and setting x and y axis titles
@@ -449,8 +523,8 @@ def AWLU_excel_formatting():
     AWLU_Sig_len = len(AWLU_signalStrengths)
 
     chart.add_series({
-        'categories': ['Data', 2, 11, AWLU_Sig_len + 1, 11],
-        'values': ['Data', i + 2, 10, AWLU_Sig_len + 1, 10],
+        'categories': ['Data', 2, 13, AWLU_Sig_len + 1, 13],
+        'values': ['Data', i + 2, 12, AWLU_Sig_len + 1, 12],
     })
 
     AWLU_ID_len = len(AWLU_tail_ID)
@@ -466,8 +540,8 @@ def AWLU_excel_formatting():
         worksheet1.write(j + 2, 5, AWLU_LRU_type[j])
         j += 1
 
-    worksheet1.insert_chart('P30', chart)
-    worksheet1.insert_chart('Z30', chart3)
+    worksheet1.insert_chart('T30', chart)
+    worksheet1.insert_chart('AD30', chart3)
 
 AID_indicator = 0
 AID_indicator_array = [0]
@@ -486,6 +560,7 @@ for file in os.listdir():
 
 os.chdir('..')
 os.chdir(AWLU_path)
+print("AWLU Files Parsed and Formatted..")
 for file in os.listdir():
     # Goes through every file in the current working directory, create the filepath of particular file
     file_path = f"{AWLU_path}/{file}"
@@ -494,7 +569,7 @@ for file in os.listdir():
     AWLU_indicator += 1
     AWLU_indicator_array.append(AWLU_indicator)
 os.chdir('..')
-
+print("AID Files Parsed and Formatted..")
 AWLU_average_len = len(AWLU_average)
 AID_average_len = len(AID_average)
 # Adding chart object to file, and setting x and y axis titles
@@ -515,13 +590,13 @@ chart3.set_title({'name': 'Average Signal Strengths'})
 
 chart3.add_series({
     'name': 'AWLU',
-    'categories': ['Data', 2, 11, AWLU_average_len + 1, 11],
-    'values': ['Data', 2, 12, AWLU_average_len + 1, 12],
+    'categories': ['Data', 2, 13, AWLU_average_len + 1, 13],
+    'values': ['Data', 2, 14, AWLU_average_len + 1, 14],
 })
 chart3.add_series({
     'name': 'AID',
-    'categories': ['Data', 2, 11, AID_average_len + 1, 11],
-    'values': ['Data', 2, 7, AID_average_len + 1, 7],
+    'categories': ['Data', 2, 13, AID_average_len + 1, 13],
+    'values': ['Data', 2, 9, AID_average_len + 1, 9],
 })
 
 
@@ -530,10 +605,10 @@ AID_excel_formatting()
 #Moves the current working directory back by 1 ('..' does this) so the excel file
 #Is created in the original directory
 os.chdir('..')
+workbook.close()
+print("Parsing Complete")
 
 
 
-
-
-print(AWLU_average)
-print(AID_average)
+#(AWLU_average)
+#print(AID_average)
