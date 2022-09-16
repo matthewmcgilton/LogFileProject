@@ -155,10 +155,11 @@ def driver(source, result, aid, awlu):
     print("Creating excel sheet..")
 
     # Deletes the zipped logs directory as it's not needed anymore.
+    shutil.rmtree(result)
     shutil.rmtree(source)
 
 
 # Execution of code
 driver(SOURCE_DIR, RESULT_DIR, AID_RESULT_DIR, AWLU_RESULT_DIR)
-exec(open("updated_folder_parser.py").read())
+exec(open("log_parser.py").read())
 
